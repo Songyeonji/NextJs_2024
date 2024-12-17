@@ -1,26 +1,27 @@
 "use client";
 import { NextPage } from "next";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useMotionValueEvent, useTransform } from "framer-motion";
 
 const MotionTest: NextPage = () => {
+  const xMotionValue = useMotionValue(0);
+  useMotionValueEvent(xMotionValue, "change", (v) => console.log(v));
+  
+  //-200~200 사이의 x 값에 대해 높이 변환 설정
+  const transformedValue = useTransform(xMotionValue, [-200, 0, 200], [0, 100, 0]);
+
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        x: -100, // 시작 위치를 왼쪽으로 100px 이동
-      }}
-      whileInView={{
-        opacity: 1,
-        x: 0, // 최종 위치를 원래대로
-      }}
-      transition={{
-        duration: 2, // 애니메이션 지속 시간 설정
-      }}
-      drag="x" // 드래그 가능 (X축)
-      className="px-4 py-4 rounded-md bg-blue-300"
-    >
-      {"hello"}
-    </motion.div>
+    <div className="flex items-center justify-center h-screen w-full">
+      <motion.div
+        style={{
+          x: xMotionValue,
+          height: transformedValue,
+        }}
+        drag="x"
+        className="px-4 py-2 rounded-md bg-blue-400"
+      >
+        {"Hello"}
+      </motion.div>
+    </div>
   );
 };
 
