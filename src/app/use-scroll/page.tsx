@@ -24,10 +24,10 @@ export default function Page() {
       {/* 스크롤 정보 */}
       <div className="flex flex-col space-y-6 fixed top-5 right-4 bg-white p-2 rounded-lg shadow-md">
         <animated.span className="text-lg">
-        {scrollY.to((v: number) => v.toFixed(0))}
+          {scrollY.to((v: number) => v.toFixed(0))}
         </animated.span>
         <animated.span className="text-lg">
-        {scrollYProgress.to((v: number) => v.toFixed(2))}
+          {scrollYProgress.to((v: number) => v.toFixed(2))}
         </animated.span>
       </div>
     </div>

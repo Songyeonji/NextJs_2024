@@ -7,14 +7,13 @@ const MotionTest: NextPage = () => {
   useMotionValueEvent(xMotionValue, "change", (v) => console.log(v));
   
   //-200~200 사이의 x 값에 대해 높이 변환 설정
-  const transformedValue = useTransform(xMotionValue, [-200, 0, 200], [0, 100, 0]);
-
+  const transformedValue = useTransform(xMotionValue, [-200, 200], ["#7b2ff7" , "#f107a3"]);
   return (
     <div className="flex items-center justify-center h-screen w-full">
       <motion.div
         style={{
           x: xMotionValue,
-          height: transformedValue,
+          backgroundColor: transformedValue,
         }}
         drag="x"
         className="px-4 py-2 rounded-md bg-blue-400"
