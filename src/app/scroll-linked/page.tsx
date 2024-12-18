@@ -7,8 +7,9 @@ import {
   useSpring,
 } from "framer-motion";
 import { useEffect } from "react";
+import { NextPage } from "next"; 
 
-export default function Page() {
+const ScrollLinked: NextPage = () => {
 
   const smoothY = useSpring(0, {
     damping: 15
@@ -26,7 +27,7 @@ export default function Page() {
   
   const textY = useTransform(
     scrollYProgress ,
-    [0.7, 0.75],
+    [0.7, 0.75], //스크롤바 미세조정정
     ["100%", "0%"]
   );
 
@@ -48,13 +49,13 @@ export default function Page() {
           <div className="h-full flex flex-col p-5 items-start justify-start text-blue-600 text-4xl font-bold overflow-hidden">
             <div className="overflow-hidden h-[40px] mb-2">
               <motion.div style={{ y: textY }}
-               transition={{ duration: 1.2 }}>
+                transition={{ duration: 1.2 }}>
                 <div>Aha!</div>
               </motion.div>
             </div>
             <div className="overflow-hidden h-[40px]">
               <motion.div style={{ y: textY }}
-               transition={{ duration: 1.2 }}>
+                transition={{ duration: 1.2 }}>
                 <div>You found me!</div>
               </motion.div>
             </div>
@@ -64,3 +65,4 @@ export default function Page() {
     </div>
   );
 }
+export default ScrollLinked;
