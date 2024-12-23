@@ -1,6 +1,5 @@
-import slice from './slice';
+import slice from "./slice";
 
-// slice 함수에 대한 테스트 묶음
 describe('slice 함수 테스트', () => {
     it('빈 배열이 입력되면 빈 배열을 반환한다', () => {
         // Arrange
@@ -56,4 +55,48 @@ describe('slice 함수 테스트', () => {
         // Assert
         expect(actual).toEqual([]);
     });
+
+   it('end가 음수일 때 배열 끝에서부터 계산한다', () => {
+    // Arrange
+    const array = [1, 2, 3, 4, 5];
+    
+    // Act
+    const actual = slice(array, 1, -1);
+    
+    // Assert
+    expect(actual).toEqual([2, 3, 4]);
+});
+
+it('start와 end가 모두 음수일 때 배열 끝에서부터 계산한다', () => {
+    // Arrange
+    const array = [1, 2, 3, 4, 5];
+    
+    // Act
+    const actual = slice(array, -4, -1);
+    
+    // Assert
+    expect(actual).toEqual([2, 3, 4]);
+});
+
+it('둘 다 음수이면서 start가 end보다 큰 경우 빈 배열을 반환한다', () => {
+    // Arrange
+    const array = [1, 2, 3, 4, 5];
+    
+    // Act
+    const actual = slice(array, -2, -3);
+    
+    // Assert
+    expect(actual).toEqual([]);
+});
+
+it('둘 다 음수이면서 start가 end보다 작은 경우 해당 범위의 배열을 반환한다', () => {
+    // Arrange
+    const array = [1, 2, 3, 4, 5];
+    
+    // Act
+    const actual = slice(array, -3, -1);
+    
+    // Assert
+    expect(actual).toEqual([3, 4]);
+});
 });
