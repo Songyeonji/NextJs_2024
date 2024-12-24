@@ -1,102 +1,85 @@
 import slice from "./slice";
 
-describe('slice 함수 테스트', () => {
-    it('빈 배열이 입력되면 빈 배열을 반환한다', () => {
-        // Arrange
-        const array: number[] = [];
-        
-        // Act
-        const actual = slice(array);
-        
-        // Assert
-        expect(actual).toEqual([]);
-    });
+describe("slice 함수 테스트", () => {
+  const arr = [1, 2, 3];
 
-    it('start 인덱스만 지정하면 해당 인덱스부터 끝까지 반환한다', () => {
-        // Arrange
-        const array = [1, 2, 3, 4];
-        
-        // Act
-        const actual = slice(array, 2);
-        
-        // Assert
-        expect(actual).toEqual([3, 4]);
-    });
-
-    it('음수 인덱스로 배열 끝에서부터 자른다', () => {
-        // Arrange
-        const array = [1, 2, 3, 4, 5];
-        
-        // Act
-        const actual = slice(array, -2);
-        
-        // Assert
-        expect(actual).toEqual([4, 5]);
-    });
-
-    it('start와 end 범위의 배열을 반환한다', () => {
-        // Arrange
-        const array = [1, 2, 3, 4, 5];
-        
-        // Act
-        const actual = slice(array, 1, 4);
-        
-        // Assert
-        expect(actual).toEqual([2, 3, 4]);
-    });
-
-    it('start가 end보다 크면 빈 배열을 반환한다', () => {
-        // Arrange
-        const array = [1, 2, 3, 4];
-        
-        // Act
-        const actual = slice(array, 3, 2);
-        
-        // Assert
-        expect(actual).toEqual([]);
-    });
-
-   it('end가 음수일 때 배열 끝에서부터 계산한다', () => {
-    // Arrange
-    const array = [1, 2, 3, 4, 5];
-    
-    // Act
-    const actual = slice(array, 1, -1);
-    
-    // Assert
-    expect(actual).toEqual([2, 3, 4]);
-});
-
-it('start와 end가 모두 음수일 때 배열 끝에서부터 계산한다', () => {
-    // Arrange
-    const array = [1, 2, 3, 4, 5];
-    
-    // Act
-    const actual = slice(array, -4, -1);
-    
-    // Assert
-    expect(actual).toEqual([2, 3, 4]);
-});
-
-it('둘 다 음수이면서 start가 end보다 큰 경우 빈 배열을 반환한다', () => {
-    // Arrange
-    const array = [1, 2, 3, 4, 5];
-    
-    // Act
-    const actual = slice(array, -2, -3);
-    
-    // Assert
+  it("빈 배열을 넣으면 빈 배열을 리턴한다.", () => {
+    const actual = slice([]);
     expect(actual).toEqual([]);
-});
+  });
 
-it('둘 다 음수이면서 start가 end보다 작은 경우 해당 범위의 배열을 반환한다', () => {
-    // Arrange
-    const array = [1, 2, 3, 4, 5];
-    
-    // Act
-    const actual = slice(array, -3, -1);
-    
-    // Assert
-    expect(actual).toEqual([3, 4]);
-});
+  it("start가 null, end가 undefined면 배열 전체를 그대로 리턴", () => {
+    const actual = slice(arr);
+    expect(actual).toEqual(arr);
+  });
+
+  it("start > 0이고 end가 undefined 인 경우에 start부터 끝까지 리턴", () => {
+    const start = 2;
+    const actual = slice(arr, start);
+
+    expect(actual).toEqual([3]);
+  });
+
+  it("start가 > 0이고 end > 0 && end < length", () => {
+    const start = 1;
+    const end = 2;
+
+    const actual = slice(arr, start, end);
+
+    expect(actual).toEqual([2]);
+  });
+
+  it("start가 undefined이고 end > 0 && end < length", () => {
+    const end = 2;
+
+    const actual = slice(arr, undefined, end);
+
+    expect(actual).toEqual([1, 2]);
+  });
+
+  it("start ,end > 0 && start > end ", () => {
+    const start = 2;
+    const end = 1;
+
+    const actual = slice(arr, start, end);
+
+    expect(actual).toEqual([]);
+    expect(actual).toHaveLength(0);
+  });
+
+  it("start < 0 && | start | < length", () => {
+    const start = -2;
+
+    const actual = slice(arr, start);
+
+    expect(actual).toEqual([2, 3]);
+  });
+
+  it("start < 0 && | start | > length", () => {
+    const start = -10;
+
+    const actual = slice(arr, start);
+
+    expect(actual).toEqual(arr);
+    expect(actual).toHaveLength(arr.length);
+    for (const num of arr) {
+      expect(actual).toContain(num);
+    }
+  });
+
+  it("start=== undefined && end < 0 && |end| <length", () => {
+    const end = -2;
+
+    const actual = slice(arr, undefined, end);
+
+    expect(actual).toEqual([1]);
+  });
+
+  it(" start === undefined && end < 0 && |end| > length", () => {
+    const end = -10;
+
+    const actual = slice(arr, undefined, end);
+
+    expect(actual).toEqual([]);
+  });
 });
